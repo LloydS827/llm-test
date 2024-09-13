@@ -1,0 +1,7 @@
+# Ignore .env file
+.env
+
+# Ignore other common files/directories (optional)
+__pycache__/
+*.pyc
+.DS_Store

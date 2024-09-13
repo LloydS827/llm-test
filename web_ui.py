@@ -1,5 +1,5 @@
 import streamlit as st
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from http import HTTPStatus
 import dashscope
 import os
@@ -7,7 +7,7 @@ import weave
 
 weave.init('OT-analysis')
 
-load_dotenv()
+# load_dotenv()
 
 st.title("视频分析应用")
 
@@ -44,7 +44,7 @@ def analyze_video(video_path):
 def analyze_all_videos():
     """Analyze all videos in the 'videos' folder."""
     results = []
-    videos_folder = os.path.join(os.getcwd(), 'videos')
+    videos_folder = 'videos'  # 修改为相对路径
     for video_file in os.listdir(videos_folder):
         if video_file.endswith(('.mp4', '.avi', '.mov')):
             video_path = os.path.join(videos_folder, video_file)

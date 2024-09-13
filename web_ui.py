@@ -5,16 +5,21 @@ import dashscope
 import os
 import weave
 
-weave.init('OT-analysis')
-
-# load_dotenv()
 
 st.title("视频分析应用")
 
-# 用户输入API key
+# 用户输入阿里云Qwen API key
 api_key = st.text_input("请输入阿里云Qwen API Key", type="password")
 if api_key:
     dashscope.api_key = api_key
+
+# 添加Weave API key配置选项
+use_weave = st.checkbox("使用Weave进行实验管理")
+if use_weave:
+    weave_api_key = st.text_input("请输入Weave API Key", type="password")
+    if weave_api_key:
+        os.environ["WANDB_API_KEY"] = weave_api_key
+        weave.init('OT-analysis')
 
 # 用户输入问题
 input_prompt = st.text_input("请输入分析问题", value="分析视频内容，若工人操作时未进行个人防护，请发出警告，并给出建议。")
@@ -55,6 +60,8 @@ def analyze_all_videos():
 if st.button("开始分析"):
     if not api_key:
         st.error("请先输入API Key")
+    elif use_weave and not weave_api_key:
+        st.error("您选择了使用Weave，请输入Weave API Key")
     else:
         with st.spinner("正在分析视频..."):
             results = analyze_all_videos()
